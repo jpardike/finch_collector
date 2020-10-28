@@ -1,16 +1,34 @@
 from django.db import models
 
+MEALS = (
+    ('B', 'Breakfast'),
+    ('L', 'Lunch'),
+    ('D', 'Dinner')
+)
+
 # Create your models here.
 
-class Finch:
-    def __init__(self, name, breed, description, age):
-        self.name = name
-        self.breed = breed
-        self.description = description
-        self.age = age
+class Finch(models.Model):
+    name = models.CharField(max_length=100)
+    breed = models.CharField(max_length=100)
+    description = models.TextField(max_length=250)
+    age = models.IntegerField()
 
-finches = [
-    Finch('Chuck', 'Brambling', 'black head in summer, and an orange breast with white belly', 2),
-    Finch('Stubbs', 'Greenfinch', 'wheezing song', 4),
-    Finch('James', 'Scottish crossbill', 'chunky, thick-set finch with a large head and substantial bill', 0)
-]
+    def __str__(self):
+        return self.name
+
+class Feeding(models.Model):
+    date = models.DateField()
+    meal = models.CharField(
+        max_length=1,
+        choices=MEALS,
+        default=MEALS[0] [0]
+    )
+
+    finch = models.ForeignKey(Finch, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.get_meal_display()} on {self.date}'
+
+    class Meta:
+        ordering = ['-date']
