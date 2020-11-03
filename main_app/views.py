@@ -56,6 +56,27 @@ def add_finch(request):
         return render(request, 'finches/new.html', context)
 
 
+@login_required
+def delete_finch(request, finch_id):
+    Finch.objects.get(id=finch_id).delete()
+    return redirect('index')
+
+
+@login_required
+def edit_finch(request, finch_id):
+    finch = Finch.objects.get(id=finch_id)
+
+    if request.method == 'POST':
+        finch_form = FinchForm(request.POST, instance=finch)
+        if finch_form.is_valid():
+            updated_finch = finch_form.save()
+            return redirect('detail', updated_finch.id)
+    else:
+        form = FinchForm(instance=finch)
+        context = { 'form': form, 'finch': finch }
+        return render(request, 'finches/edit.html', context)
+
+
 # Finch Toys
 @login_required
 def assoc_toy(request, finch_id, toy_id):

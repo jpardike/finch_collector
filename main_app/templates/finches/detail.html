@@ -21,6 +21,12 @@ Finch Details
           <p>Age: Hatchling</p>
         {% endif %}
       </div>
+
+      <div class="card-action">
+        <a href="{% url 'delete_finch' finch.id %}" class="btn-small red">Delete</a>
+        <a href="{% url 'edit_finch' finch.id %}" class="btn-small">Edit</a>
+      </div>
+
     </div>
   </div>
   <div class="col s6">
