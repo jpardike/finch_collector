@@ -19,8 +19,17 @@
           <li><a href="/" class="left brand-logo">&nbsp;&nbsp;FinchCollector</a></li>
         </ul>
         <ul class="right">
-          <li><a href="/about">About</a></li>
-          <li><a href="/finches">View All My Finches</a></li>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'add_finch' %}">Add Finch</a></li>
+            <li><a href="{% url 'index' %}">See All My Finches</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
+          {% endif %}
         </ul>
       </div>
     </nav>

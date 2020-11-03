@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  {% if error_message %}
+    <p class="red">{{ error_message }}</p>
+  {% endif %}
+
+  <h1>Singup</h1>
+
+  <form action="{% url 'signup' %}" method="POST">
+
+    <!-- CSRF TOKEN - Cross Site Request Forgery -->
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button class="btn" type="submit">Signup</button>
+
+  </form>
+
+{% endblock %}
